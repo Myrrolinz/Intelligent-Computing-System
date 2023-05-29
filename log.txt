@@ -1,0 +1,299 @@
+0 conv1 Convolution
+4 pool1 Pooling
+5 res2a_branch1 Convolution
+8 res2a_branch2a Convolution
+12 res2a_branch2b Convolution
+15 res2a Eltwise
+17 res2b_branch2a Convolution
+21 res2b_branch2b Convolution
+24 res2b Eltwise
+26 res3a_branch1 Convolution
+29 res3a_branch2a Convolution
+33 res3a_branch2b Convolution
+36 res3a Eltwise
+38 res3b_branch2a Convolution
+42 res3b_branch2b Convolution
+45 res3b Eltwise
+47 res4a_branch1 Convolution
+50 res4a_branch2a Convolution
+54 res4a_branch2b Convolution
+57 res4a Eltwise
+59 res4b_branch2a Convolution
+63 res4b_branch2b Convolution
+66 res4b Eltwise
+68 res5a_branch1 Convolution
+71 res5a_branch2a Convolution
+75 res5a_branch2b Convolution
+78 res5a Eltwise
+80 res5b_branch2a Convolution
+84 res5b_branch2b Convolution
+87 res5b Eltwise
+89 pool5 Pooling
+90 fc1000 InnerProduct
+done
+Save to  .\out\resnet18.weights
+[net]
+batch=1
+channels=3
+height=224
+width=224
+
+[convolutional]
+filters=64
+size=7
+stride=2
+pad=1
+batch_normalize=1
+activation=relu
+
+[maxpool]
+size=3
+stride=2
+
+[convolutional]
+filters=64
+size=1
+stride=1
+pad=1
+batch_normalize=1
+activation=linear
+
+[route]
+layers=-2
+
+[convolutional]
+filters=64
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=relu
+
+[convolutional]
+filters=64
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=linear
+
+[shortcut]
+from=-4
+activation=relu
+
+[convolutional]
+filters=64
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=relu
+
+[convolutional]
+filters=64
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=linear
+
+[shortcut]
+from=-3
+activation=relu
+
+[convolutional]
+filters=128
+size=1
+stride=2
+pad=1
+batch_normalize=1
+activation=linear
+
+[route]
+layers=-2
+
+[convolutional]
+filters=128
+size=3
+stride=2
+pad=1
+batch_normalize=1
+activation=relu
+
+[convolutional]
+filters=128
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=linear
+
+[shortcut]
+from=-4
+activation=relu
+
+[convolutional]
+filters=128
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=relu
+
+[convolutional]
+filters=128
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=linear
+
+[shortcut]
+from=-3
+activation=relu
+
+[convolutional]
+filters=256
+size=1
+stride=2
+pad=1
+batch_normalize=1
+activation=linear
+
+[route]
+layers=-2
+
+[convolutional]
+filters=256
+size=3
+stride=2
+pad=1
+batch_normalize=1
+activation=relu
+
+[convolutional]
+filters=256
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=linear
+
+[shortcut]
+from=-4
+activation=relu
+
+[convolutional]
+filters=256
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=relu
+
+[convolutional]
+filters=256
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=linear
+
+[shortcut]
+from=-3
+activation=relu
+
+[convolutional]
+filters=512
+size=1
+stride=2
+pad=1
+batch_normalize=1
+activation=linear
+
+[route]
+layers=-2
+
+[convolutional]
+filters=512
+size=3
+stride=2
+pad=1
+batch_normalize=1
+activation=relu
+
+[convolutional]
+filters=512
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=linear
+
+[shortcut]
+from=-4
+activation=relu
+
+[convolutional]
+filters=512
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=relu
+
+[convolutional]
+filters=512
+size=3
+stride=1
+pad=1
+batch_normalize=1
+activation=linear
+
+[shortcut]
+from=-3
+activation=relu
+
+[avgpool]
+
+[connected]
+output=1000
+activation=linear
+
+layer     filters    size              input                output
+    0 conv     64  7 x 7 / 2   224 x 224 x   3   ->   112 x 112 x  64
+    1 max          3 x 3 / 2   112 x 112 x  64   ->    56 x  56 x  64
+    2 conv     64  1 x 1 / 1    56 x  56 x  64   ->    56 x  56 x  64
+    3 route  1
+    4 conv     64  3 x 3 / 1    56 x  56 x  64   ->    56 x  56 x  64
+    5 conv     64  3 x 3 / 1    56 x  56 x  64   ->    56 x  56 x  64
+    6 shortcut 2
+    7 conv     64  3 x 3 / 1    56 x  56 x  64   ->    56 x  56 x  64
+    8 conv     64  3 x 3 / 1    56 x  56 x  64   ->    56 x  56 x  64
+    9 shortcut 6
+   10 conv    128  1 x 1 / 2    56 x  56 x  64   ->    28 x  28 x 128
+   11 route  9
+   12 conv    128  3 x 3 / 2    56 x  56 x  64   ->    28 x  28 x 128
+   13 conv    128  3 x 3 / 1    28 x  28 x 128   ->    28 x  28 x 128
+   14 shortcut 10
+   15 conv    128  3 x 3 / 1    28 x  28 x 128   ->    28 x  28 x 128
+   16 conv    128  3 x 3 / 1    28 x  28 x 128   ->    28 x  28 x 128
+   17 shortcut 14
+   18 conv    256  1 x 1 / 2    28 x  28 x 128   ->    14 x  14 x 256
+   19 route  17
+   20 conv    256  3 x 3 / 2    28 x  28 x 128   ->    14 x  14 x 256
+   21 conv    256  3 x 3 / 1    14 x  14 x 256   ->    14 x  14 x 256
+   22 shortcut 18
+   23 conv    256  3 x 3 / 1    14 x  14 x 256   ->    14 x  14 x 256
+   24 conv    256  3 x 3 / 1    14 x  14 x 256   ->    14 x  14 x 256
+   25 shortcut 22
+   26 conv    512  1 x 1 / 2    14 x  14 x 256   ->     7 x   7 x 512
+   27 route  25
+   28 conv    512  3 x 3 / 2    14 x  14 x 256   ->     7 x   7 x 512
+   29 conv    512  3 x 3 / 1     7 x   7 x 512   ->     7 x   7 x 512
+   30 shortcut 26
+   31 conv    512  3 x 3 / 1     7 x   7 x 512   ->     7 x   7 x 512
+   32 conv    512  3 x 3 / 1     7 x   7 x 512   ->     7 x   7 x 512
+   33 shortcut 30
+   34 avg                        7 x   7 x 512   ->      512
+   35 connected                            512  ->      1000
